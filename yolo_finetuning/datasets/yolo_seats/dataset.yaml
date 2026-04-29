@@ -1,0 +1,8 @@
+path: yolo_finetuning/datasets/yolo_seats
+train: train/images
+val: val/images
+names:
+  0: empty_seat
+  1: occupied_seat
+  2: seat_back
+  3: seat_back_occupied
