@@ -17,7 +17,7 @@ class LlavaOneVisionEdgeEncoder:
     def encode(self, image):
         inputs = self.processor(images=self.pil_image(image), return_tensors="pt").to(config.LLAVA_ENCODER_DEVICE)
         with self.torch.no_grad():
-            features = self.vision_model(**inputs).last_hidden_state.detach().cpu().to(self.torch.float16).numpy()
+            features = self.vision_model.vision_model(pixel_values=inputs["pixel_values"]).last_hidden_state.detach().cpu().to(self.torch.float16).numpy()
         return {"kind": "llava_onevision_vision_features", "encoder": config.LLAVA_VISION_ENCODER_MODEL_ID, "shape": list(features.shape), "dtype": "float16", "data": base64.b64encode(features.tobytes()).decode("ascii")}
 
     def pil_image(self, image):
